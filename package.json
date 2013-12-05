@@ -1,0 +1,23 @@
+{
+  "name": "bti-knowledge-base",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "sh ./bin/development.sh",
+    "start": "sh ./bin/production.sh",
+    "stop": "sh ./bin/stop.sh"
+  },
+  "main": "./start.coffee",
+  "dependencies": {
+    "reds": "~0.2.4",
+    "underscore": "~1.5.2",
+    "sugar": "~1.4.1",
+    "mongodb": "~1.3.20",
+    "coffee-script": "~1.6.3",
+    "redis": "~0.9.1",
+    "hiredis": "~0.1.15",
+    "express": "~3.4.6",
+    "connect-redis": "~1.4.6",
+    "nunjucks": "~1.0.0"
+  }
+}

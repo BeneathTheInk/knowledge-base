@@ -1,0 +1,25 @@
+# .NODEMONIGNORE
+
+### Directories ###
+
+bin/
+public/
+.git/
+views/
+node_modules/
+
+### Extensions ###
+
+*.md
+*.html
+*.tgz
+*.tar.gz
+
+### Specific Files ###
+
+.DS_Store
+dump.rdb
+.gitignore
+Cakefile
+package.json
+.pid
