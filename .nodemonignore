@@ -6,12 +6,14 @@ bin/
 public/
 .git/
 views/
+styles/
 node_modules/
 
 ### Extensions ###
 
 *.md
 *.html
+*.less
 *.tgz
 *.tar.gz
 

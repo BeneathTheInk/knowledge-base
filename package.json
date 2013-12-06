@@ -9,15 +9,16 @@
   },
   "main": "./start.coffee",
   "dependencies": {
-    "reds": "~0.2.4",
-    "underscore": "~1.5.2",
-    "sugar": "~1.4.1",
-    "mongodb": "~1.3.20",
-    "coffee-script": "~1.6.3",
-    "redis": "~0.9.1",
-    "hiredis": "~0.1.15",
-    "express": "~3.4.6",
-    "connect-redis": "~1.4.6",
-    "nunjucks": "~1.0.0"
+    "reds": "0.2.4",
+    "underscore": "1.5.2",
+    "sugar": "1.4.1",
+    "mongodb": "1.3.19",
+    "coffee-script": "1.6.3",
+    "redis": "0.9.1",
+    "hiredis": "0.1.15",
+    "express": "3.4.6",
+    "connect-redis": "1.4.6",
+    "nunjucks": "git+https://github.com/appleifreak/nunjucks.git",
+    "less-middleware": "0.1.14"
   }
 }

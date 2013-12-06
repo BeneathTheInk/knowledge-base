@@ -13,8 +13,9 @@ class Application extends EventEmitter
 		@initTimer = new Date # date cache for the *rough* time of launch
 
 		# app environment
+		@env = process.env.NODE_ENV
 		@dir = process.cwd()
-		@isServer = false
+		@isServer = true
 		@isClient = false
 
 	# starts up the app

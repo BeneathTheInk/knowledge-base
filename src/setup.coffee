@@ -15,6 +15,13 @@ MongoClient.connect mongo_url, app.wait (err, db) ->
 	console.info "Connected to mongo database #{db.databaseName} at #{purl.host}."
 	app.emit "database", db
 
+### AUTH CONNECTION ###
+# This is a terrible way to set this up.
+# Auth should be moved to its own server.
+MongoClient.connect "mongodb://localhost:27017/dashboard", app.wait (err, db) ->
+	if err then return app.error err
+	app.users = db.collection "users"
+
 ### COLLECTIONS ###
 
 app.collections = {}
@@ -22,8 +29,7 @@ app.collection = (name) ->
 	unless app.db?
 		throw new Error "Cannot call app.collection until database is ready."
 
-	if _.has(app.collections, name)
-		throw new Error "Collection #{name} already exists and cannot be overridden."
+	if _.has(app.collections, name) then return app.collections[name]
 	
 	col = app.db.collection name
 

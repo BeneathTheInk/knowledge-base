@@ -2271,8 +2271,8 @@ input[type="button"].btn-block {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('/bootstrap/fonts/fontawesome-webfont.eot?v=4.0.3');
-  src: url('/bootstrap/fonts/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('/bootstrap/fonts/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('/bootstrap/fonts/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('/bootstrap/fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+  src: url('/bootstrap/font/fontawesome-webfont.eot?v=4.0.3');
+  src: url('/bootstrap/font/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'), url('/bootstrap/font/fontawesome-webfont.woff?v=4.0.3') format('woff'), url('/bootstrap/font/fontawesome-webfont.ttf?v=4.0.3') format('truetype'), url('/bootstrap/font/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }

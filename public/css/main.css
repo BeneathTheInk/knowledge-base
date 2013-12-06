@@ -1,0 +1,41 @@
+body {
+  padding-top: 50px;
+}
+.dropdown-menu {
+  overflow: auto;
+  max-height: 400px;
+}
+.dropdown-menu li.detail {
+  padding: 3px 15px;
+  color: #666666;
+  font-size: 12px;
+}
+.dropdown-menu.dropdown-icons > li > a {
+  padding: 3px 15px 3px 10px;
+}
+.dropdown-menu.dropdown-icons > li > a i {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  margin: 0 0 0 0;
+}
+nav input.search {
+  width: 300px;
+}
+.inbox .question-list .question {
+  font-weight: bold;
+  display: block;
+}
+.inbox .question-list .details {
+  display: block;
+  font-style: italic;
+  font-size: 12px;
+  color: #666666;
+}
+.inbox .question-list .no-items {
+  text-align: center;
+  padding: 15px;
+  font-style: italic;
+  color: #666666;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22%2FUsers%2Ftyler%2FDropbox%2FClients%2FBTI%2Fknowledge-base%2Fstyles%2Fmisc.less%22%2C%22%2FUsers%2Ftyler%2FDropbox%2FClients%2FBTI%2Fknowledge-base%2Fstyles%2Flayout.less%22%2C%22%2FUsers%2Ftyler%2FDropbox%2FClients%2FBTI%2Fknowledge-base%2Fstyles%2Finbox.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AACK%3BEACJ%2CiBAAA%3B%3BAAGc%3BEACd%2CcAAA%3BEACA%2CiBAAA%3B%3BAAFc%2CcAIZ%2CGAAQ%3BEACT%2CiBAAA%3BEACA%2CcAAA%3BEACA%2CeAAA%3B%3BAAGA%2CcAAgB%2CeAAK%2CKAAI%3BEACzB%2C0BAAA%3B%3BAADA%2CcAAgB%2CeAAK%2CKAAI%2CIAGvB%3BEACD%2CqBAAA%3BEACA%2CWAAA%3BEACA%2CkBAAA%3BEACA%2CeAAA%3B%3BACtBC%2CGAEE%2CMAAQ%3BEACZ%2CYAAA%3B%3BACHK%2CMAES%2CeACJ%3BEACT%2CiBAAA%3BEACA%2CcAAA%3B%3BAALI%2CMAES%2CeAML%3BEACR%2CcAAA%3BEACA%2CkBAAA%3BEACA%2CeAAA%3BEACA%2CcAAA%3B%3BAAZI%2CMAES%2CeAaJ%3BEACT%2CkBAAA%3BEACA%2CaAAA%3BEACA%2CkBAAA%3BEACA%2CcAAA%22%7D */
