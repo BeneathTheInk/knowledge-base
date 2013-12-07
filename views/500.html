@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="page-header">
+	<h1>Oops! <small>Something terrible has happened.</small></h1>
+</div>
+
+<p>We were trying to do something important when the following error occurred. Please try again or contact us if this problem persists.</p>
+
+<pre><code>{{ error.stack }}</code></pre>
+
+{% endblock %}

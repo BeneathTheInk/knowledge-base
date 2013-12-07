@@ -2,6 +2,7 @@
 _ = require "underscore"
 require "sugar"
 path = require "path"
+fs = require "fs"
 {EventEmitter} = require "events"
 util = require "./util"
 
@@ -58,6 +59,14 @@ class Application extends EventEmitter
 
 	# convenience method for turning an absolute path into a relative path
 	relative: (to, lead = false) -> (if lead then "/" else "") + path.relative @dir, to
+
+	# require all js and coffee files in a folder, relative to cwd
+	loadDir: (dir) ->
+		routesDir = app.path dir
+		fs.readdirSync(routesDir).forEach (file) ->
+			if _.contains [ ".js", ".coffee" ], path.extname(file)
+				require path.join routesDir, file
+		return @
 
 app =
 global.app =

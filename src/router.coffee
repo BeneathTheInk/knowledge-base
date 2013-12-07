@@ -18,12 +18,12 @@ server =
 app.server = http.createServer(router)
 
 ### MIDDLEWARE ###
+
 if app.env is "production"
 	router.use(express.compress())
 
 if app.env is "development"
 	router.use(express.logger('dev'))
-		.use(express.errorHandler())
 
 router.use(express.cookieParser())
 	.use(express.json())
@@ -48,9 +48,17 @@ router.use(express.cookieParser())
 	)
 	
 # Nunjucks (templating)
-nunjucks.configure app.path('views'),
+tplenv = nunjucks.configure app.path('views'),
 	express: router
 	watch: true
+
+# set up template markdown filter
+marked = require "marked"
+marked.setOptions
+	breaks: true
+	smartypants: true
+	sanitize: true
+tplenv.addFilter "markdown", marked
 
 # custom res.render
 router.use (req, res, next) ->
@@ -76,10 +84,12 @@ router.use auth
 router.use router.router
 
 # load in all routes
-routesDir = path.join __dirname, "routes"
-fs.readdirSync(routesDir).forEach (file) ->
-	if _.contains [ ".js", ".coffee" ], path.extname(file)
-		require path.join routesDir, file
+app.loadDir "src/routes"
+
+# custom error handler
+router.use (err, req, res, next) ->
+	res.status 500
+	res.render "500", error: err
 
 # prepare for launch
 app.ready ->

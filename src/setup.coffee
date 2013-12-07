@@ -1,42 +1,37 @@
 _ = require "underscore"
+fs = require "fs"
 
 ### MONGO ###
 
-{MongoClient} = require "mongodb"
+mongoose = require 'mongoose'
 url = require "url"
 
 mongo_url = process.env.MONGO_URL
 unless mongo_url? then throw new Error "Missing mongo URL."
 
-MongoClient.connect mongo_url, app.wait (err, db) ->
-	if err then return app.error err
-	app.db = db
+mongoose.connect mongo_url
+app.db = mongoose.connection
+
+app.db.on "error", (e) ->
+	if app.state is "ready" then console.error e.stack
+	else app.error e
+
+app.db.once "open", app.wait ->
 	purl = url.parse mongo_url
-	console.info "Connected to mongo database #{db.databaseName} at #{purl.host}."
-	app.emit "database", db
+	console.info "Connected to mongo database #{app.db.db.databaseName} at #{purl.host}."
 
 ### AUTH CONNECTION ###
 # This is a terrible way to set this up.
 # Auth should be moved to its own server.
+{MongoClient} = require "mongodb"
 MongoClient.connect "mongodb://localhost:27017/dashboard", app.wait (err, db) ->
 	if err then return app.error err
 	app.users = db.collection "users"
 
-### COLLECTIONS ###
+### COLLECTIONS / MODELS ###
 
 app.collections = {}
-app.collection = (name) ->
-	unless app.db?
-		throw new Error "Cannot call app.collection until database is ready."
-
-	if _.has(app.collections, name) then return app.collections[name]
-	
-	col = app.db.collection name
-
-	app.collections[name] = col
-	app.db[name] = col unless _.has(app.db, name) or app.db[name]?
-
-	return col
+app.loadDir "src/models" # load all models
 
 ### REDIS ###
 

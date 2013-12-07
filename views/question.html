@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block bodyclass %}question{% endblock %}
+
+{% block body %}
+
+<div class="question-header">
+	<h1>{{ question.question }}</h1>
+	<div class="details">Asked by {% if owner %}{{ owner.username }}{% else %}Unknown{% endif %} {{ question.created.relative() }}</div>
+</div>
+
+{% if question.details %}
+<div class="well">
+	<small class="title">Details</small>
+	{{ question.details | markdown }}
+</div>
+{% endif %}
+
+{% if not question.answer %}
+<p>This question hasn't been answered yet. Please allow us 48 hours to post a response.</p>
+{% endif %}
+
+{% endblock %}

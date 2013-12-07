@@ -8,6 +8,13 @@
 	<h1>Inbox</h1>
 </div>
 
+{% if $req.query.success == "1" %}
+<div class="alert alert-success">
+	<h4>Success!</h4>
+	<p>You question has been added. Please give us up to 48 hours to respond. If you need a response ASAP please email us (<a href="mailto: info@beneaththeink.com">info@beneaththeink.com</a>) or call us (303.264.7156).</p>
+</div>
+{% endif %}
+
 <div class="row">
 	<div class="col-lg-6">
 		<div class="panel panel-default question-list">
@@ -18,7 +25,7 @@
 			{% if unanswered.length %}
 			<div class="list-group">
 				{% for question in unanswered %}
-				<a href="#" class="list-group-item">
+				<a href="/question/{{ question.shortid }}/{{ question.handle }}" class="list-group-item">
 					<span class="question">{{ question.question }}</span>
 					<span class="details">Asked {{ question.created.relative() }}</span>
 				</a>

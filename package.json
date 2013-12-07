@@ -19,6 +19,9 @@
     "express": "3.4.6",
     "connect-redis": "1.4.6",
     "nunjucks": "git+https://github.com/appleifreak/nunjucks.git",
-    "less-middleware": "0.1.14"
+    "less-middleware": "0.1.14",
+    "async": "0.2.9",
+    "mongoose": "~3.8.1",
+    "marked": "~0.2.10"
   }
 }

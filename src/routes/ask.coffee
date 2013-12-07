@@ -1,4 +1,6 @@
 _ = require "underscore"
+util = require "../util"
+async = require "async"
 
 pagetitle = "Ask a Question"
 
@@ -19,10 +21,8 @@ app.express.post "/ask", (req, res) ->
 		doerror "The #{label} field is required."
 
 	data = _.pick req.body, "question", "details"
-	data.owner = req.user._id.toString()
-	data.public = false
-	data.created = data.last_updated = new Date
+	data.owner = req.user._id
 
-	app.collection("questions").insert data, (err, docs) ->
+	Questions.create data, (err, docs) ->
 		if err? then doerror err
-		else res.send "success"
+		else res.redirect "/inbox?success=1"
