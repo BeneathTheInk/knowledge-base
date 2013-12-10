@@ -8,6 +8,7 @@
 	$(document).ready(function() {
 		var editBtn = $("#editBtn"),
 			cancelBtn = $("#cancelBtn"),
+			deleteBtn = $("#deleteBtn"),
 			content = $("#questionContent"),
 			editForm = $("#editQuestion");
 
@@ -23,6 +24,12 @@
 			editForm.hide().get(0).reset();
 			editBtn.show();
 			content.show();
+		});
+
+		deleteBtn.click(function(e) {
+			e.preventDefault();
+			if (confirm("Are you sure you want to delete this question?"))
+				location.href = $(e.target).closest("a").attr("href");
 		});
 	});
 </script>
@@ -106,6 +113,7 @@
 			</div>
 		</div>
 	</div>
+	<a href="/question/{{ question.shortid }}/{{ question.handle }}/delete" id="deleteBtn" class="btn btn-danger pull-right">Delete Question</a>
 	{% endif %}
 	<button type="submit" class="btn btn-success">Save</button>
 	<a href="#" class="btn btn-default" {% if error %}onclick="location.reload(); return false;"{% else %}id="cancelBtn"{% endif %}>Cancel</a>

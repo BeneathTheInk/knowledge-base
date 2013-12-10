@@ -31,7 +31,10 @@
 							<input type="text" class="form-control search" name="s" placeholder="Search for Knowledge" value="{{ search_term }}" />
 						</div>
 					</form>
-					<ul class="nav navbar-nav pull-right">
+					<ul class="nav navbar-nav navbar-left">
+						<li><a href="/all" title="All Questions"><i class="icon icon-align-justify"></i></a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
 						{% if user %}
 						<script type="text/javascript">
 							$(document).ready(function() {

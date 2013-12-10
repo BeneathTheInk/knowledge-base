@@ -23,6 +23,23 @@ app.express.get "/question/:shortid/:handle?", (req, res) ->
 			if question.answered_by? then app.users.findOne _id: question.answered_by, done
 			else done()
 
+app.express.get "/question/:shortid/:handle/delete", (req, res) ->
+
+	Questions.findOne shortid: req.param("shortid"), (err, question) ->
+		if err? then return next err
+		else unless question? then return res.render "404"
+
+		handle = req.param "handle"
+		if question.handle isnt handle then return res.render "404"
+		url = "/question/#{question.shortid}/#{question.handle}"
+
+		# redirect back to question if not signed in and not admin
+		unless req.user? and util.permission("admin", req.user)
+			return res.redirect url
+
+		# delete!
+		question.remove (err) -> res.redirect url
+
 app.express.post "/question/:shortid/:handle?", (req, res) ->
 	# redirect back to question if not signed in
 	unless req.user? then return res.redirect req.url

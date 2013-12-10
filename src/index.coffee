@@ -6,6 +6,12 @@ fs = require "fs"
 {EventEmitter} = require "events"
 util = require "./util"
 
+# catch uncaught errors
+process.on 'uncaughtException', (err) ->
+	console.log 'Uncaught Exception:'
+	console.error err
+	if app.env is "development" then process.exit(1)
+
 # get a copy of package.json to keep things DRY
 pkg = JSON.parse fs.readFileSync path.resolve __dirname, "../package.json"
 
