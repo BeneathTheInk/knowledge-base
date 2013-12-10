@@ -3,7 +3,7 @@
 # variables
 export NODE_ENV=production
 export HOST=kb.beneaththeink.com
-export PORT=8010
+export PORT=8008
 export MONGO_URL="mongodb://localhost:27017/kbase"
 export REDIS_HOST=localhost
 export REDIS_PORT=6379
