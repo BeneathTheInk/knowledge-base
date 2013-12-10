@@ -45,11 +45,14 @@ rdb = parseInt process.env.REDIS_DB, 10
 if !rdb? or isNaN(rdb) then rdb = 0
 
 app.redis = redis.createClient rport, rhost, auth_pass: rauth
-app.redis.select rdb, app.wait()
 app.redis.on "ready", app.wait -> console.info "Connected to redis database #{rdb} at #{rhost}:#{rport}."
 app.redis.on "error", (e) -> console.error e
+
+# switch databases and flush on start
+app.redis.multi().select(rdb).flushdb().exec app.wait()
 
 ### REDS ###
 
 reds = require "reds"
 reds.createClient = -> return app.redis
+app.search = reds.createSearch "questions"

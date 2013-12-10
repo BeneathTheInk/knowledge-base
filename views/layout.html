@@ -26,9 +26,9 @@
 				</div>
 
 				<div class="collapse navbar-collapse" id="navbar-collapse">
-					<form class="navbar-form navbar-left" role="search">
+					<form class="navbar-form navbar-left" role="search" method="get" action="/search">
 						<div class="form-group">
-							<input type="text" class="form-control search" placeholder="Search for Knowledge" />
+							<input type="text" class="form-control search" name="s" placeholder="Search for Knowledge" value="{{ search_term }}" />
 						</div>
 					</form>
 					<ul class="nav navbar-nav pull-right">
@@ -51,7 +51,8 @@
 							<ul class="dropdown-menu dropdown-icons">
 								<li class="detail">Signed in as {{ user.profile.name }}.</li>
 								<li class="divider"></li>
-								<li><a href="/signout?u={{ $req.url | urlencode }}" x-bind="click: signout"><i class="icon icon-sign-out"></i> Sign Out</a></li>
+								<li><a href="http://go.beneaththeink.com"><i class="icon icon-share-square-o"></i> Go to eBook Enhancer</a></li>
+								<li><a href="/signout?u={{ $req.url | urlencode }}"><i class="icon icon-sign-out"></i> Sign Out</a></li>
 							</ul>
 						</li>
 						{% else %}
@@ -64,6 +65,13 @@
 
 		<div class="container">
 			{% block body %}{% endblock %}
+
+			<footer>
+				<div class="row">
+					<div class="col-lg-6 left-side">&copy; {{ Date.create().getFullYear() }} <a href="http://beneaththeink.com">Beneath the Ink</a>. All Rights Reserved. v{{ $app.version }}</div>
+					<div class="col-lg-6 right-side"></div>
+				</div>
+			</footer>
 		</div>
 	</body>
 </html>

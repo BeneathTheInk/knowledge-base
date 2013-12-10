@@ -6,6 +6,9 @@ fs = require "fs"
 {EventEmitter} = require "events"
 util = require "./util"
 
+# get a copy of package.json to keep things DRY
+pkg = JSON.parse fs.readFileSync path.resolve __dirname, "../package.json"
+
 class Application extends EventEmitter
 
 	constructor: ->
@@ -16,6 +19,9 @@ class Application extends EventEmitter
 		# app environment
 		@env = process.env.NODE_ENV
 		@dir = process.cwd()
+		@host = process.env.HOST ? "localhost"
+		@version = pkg.version
+		@name = pkg.name
 		@isServer = true
 		@isClient = false
 

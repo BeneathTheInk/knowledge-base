@@ -1,0 +1,48 @@
+.search, .tag {
+
+	.results {
+
+		.result {
+			color: #333;
+			display: block;
+			padding: 20px 0;
+			
+			&:not(:last-child) {
+				border-bottom: 1px solid #eee;
+			}
+
+			&:hover {
+				text-decoration: none;
+
+				.question {
+					text-decoration: underline;
+				}
+			}
+
+			> span {
+				display: block;
+			}
+
+			.question {
+				font-weight: bold;
+				font-size: 18px;
+			}
+
+			.details {
+				color: lighten(black, 30%);
+				font-style: italic;
+				margin-bottom: 5px;
+				font-size: 12px;
+			}
+
+			.answer {
+				:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+		}
+
+	}
+
+}

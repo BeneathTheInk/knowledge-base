@@ -149,8 +149,7 @@ exports.permission = (level, user) ->
 		else unless level? then return _.clone(perms)
 	else
 		# server needs to retrieve async so do it for us
-		unless user? and _.isObject(user)
-			throw new Error "Expecting user object for second argument."
+		return false unless _.isObject(user) and !_.isEmpty(user)
 
 		uperm = user.permission || 0
 		if _.isNumber(level) then return uperm >= level

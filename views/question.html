@@ -4,20 +4,111 @@
 
 {% block body %}
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		var editBtn = $("#editBtn"),
+			cancelBtn = $("#cancelBtn"),
+			content = $("#questionContent"),
+			editForm = $("#editQuestion");
+
+		editBtn.click(function(e) {
+			e.preventDefault();
+			editBtn.hide();
+			content.hide();
+			editForm.show();
+		});
+
+		cancelBtn.click(function(e) {
+			e.preventDefault();
+			editForm.hide().get(0).reset();
+			editBtn.show();
+			content.show();
+		});
+	});
+</script>
+
+{% set isAdmin = $util.permission("admin", user) %}
+
 <div class="question-header">
+	{% if isAdmin or (user._id.toString() == question.owner.toString() and not question.answer) %}
+	<a href="#"{% if error %} style="display: none;"{% endif %} id="editBtn" class="btn btn-primary pull-right">
+		{% if isAdmin %}{% if question.answer %}Edit {% endif %}Answer
+		{% else %}Edit{% endif %}
+	</a>
+	{% endif %}
 	<h1>{{ question.question }}</h1>
-	<div class="details">Asked by {% if owner %}{{ owner.username }}{% else %}Unknown{% endif %} {{ question.created.relative() }}</div>
+	<div class="details">
+		Asked by {{ question.owner | username }} {{ question.created.relative() }}
+		{% if question.answer %}
+		&bullet;
+		Answered by {{ answered_by.profile.name }} {{ question.answered_on.relative() }}
+		{% endif %}
+		{% if question.tags.length %}
+		&bullet;
+		{% for tag in question.tags %}
+			<a href="/tag/{{ tag }}">{{ tag }}</a>{% if not loop.last %},{% endif %}
+		{% endfor %}
+		{% endif %}
+	</div>
 </div>
 
-{% if question.details %}
-<div class="well">
-	<small class="title">Details</small>
-	{{ question.details | markdown }}
-</div>
-{% endif %}
+<div class="content"{% if error %} style="display: none;"{% endif %} id="questionContent">
+	{% if success %}<div class="alert alert-success">Question was saved successfully.</div>{% endif %}
 
-{% if not question.answer %}
-<p>This question hasn't been answered yet. Please allow us 48 hours to post a response.</p>
-{% endif %}
+	{% if question.details %}
+	<div class="well">
+		{{ question.details | markdown }}
+	</div>
+	{% endif %}
+
+	{% if question.answer %}
+	{{ question.answer | markdown }}
+	{% else %}
+	<p>This question hasn't been answered yet. Please allow us 48 hours to post a response.</p>
+	{% endif %}
+</div>
+
+<form class="form-horizontal"{% if not error %} style="display: none;"{% endif %} id="editQuestion" method="post" action="{{ $req.url }}">
+	{% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+	<div class="form-group">
+		<label class="col-lg-12 col-md-12" for="inputQuestion">Question</label>
+		<div class="col-lg-6 col-md-6">
+			<input type="text" class="form-control" id="inputQuestion" name="question" value="{{ data.question or question.question }}" />
+		</div>
+		<div class="col-lg-6 col-md-6 help-block">Less specific questions are generally easier (and faster) to answer.</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-12 col-md-12" for="inputDetails">Details</label>
+		<div class="col-lg-6 col-md-6">
+			<textarea class="form-control" rows="5" id="inputDetails" name="details">{{ data.details or question.details }}</textarea>
+		</div>
+		<div class="col-lg-6 col-md-6 help-block">Please provide specific details about your question to help the support agent give a more accurate answer. For example, if you are having issues with something, please provide the exact steps you used. All content is formatted with <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">markdown</a>.</div>
+	</div>
+	{% if isAdmin %}
+	<div class="form-group">
+		<label class="col-lg-12 col-md-12" for="inputAnswer">Answer</label>
+		<div class="col-lg-12 col-md-12">
+			<textarea class="form-control" id="inputAnswer" name="answer" rows="15">{{ data.answer or question.answer }}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-12 col-md-12" for="inputTags">Tags</label>
+		<div class="col-lg-6 col-md-6">
+			<input type="text" class="form-control" id="inputTags" name="tags" value="{{ data.tags or question.tags.join(", ") }}" />
+		</div>
+		<div class="col-lg-6 col-md-6 help-block">Comma separated. Direct terms associated with this question.</div>
+	</div>
+	<div class="form-group">
+		<div class="col-lg-12 col-md-12">
+			<div class="checkbox">
+				<label><input type="checkbox" name="public"{% if data.public or question.public %} checked{% endif %} /> Display Publicly</label>
+				<div class="help-block">Available in search results and on the home page.</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	<button type="submit" class="btn btn-success">Save</button>
+	<a href="#" class="btn btn-default" {% if error %}onclick="location.reload(); return false;"{% else %}id="cancelBtn"{% endif %}>Cancel</a>
+</form>
 
 {% endblock %}

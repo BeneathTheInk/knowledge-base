@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block bodyclass %}tag{% endblock %}
+
+{% block body %}
+
+<div class="page-header">
+	<h2>Questions Tagged with "{{ tag }}"</h2>
+</div>
+
+<div class="results">
+	{% if results.length %}
+	{% for question in results %}
+	<a href="/question/{{ question.shortid }}/{{ question.handle }}" class="result">
+		<span class="question">{{ question.question }}</span>
+		<span class="details">Asked by {{ question.owner | username }} {{ question.created.relative() }}</span>
+		{% if question.answer %}<span class="answer">{{ question.answer.truncateOnWord(500) | markdown }}</span>{% endif %}
+	</a>
+	{% endfor %}
+	{% else %}
+	<div class="no-items">No results.</div>
+	{% endif %}
+</div>
+
+{% endblock %}

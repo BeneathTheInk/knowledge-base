@@ -15,47 +15,38 @@
 </div>
 {% endif %}
 
-<div class="row">
-	<div class="col-lg-6">
+{% set rowSize = 6 %}
+{% if $util.permission("admin", user) %}{% set rowSize = 4 %}{% endif %}
+
+{% macro quest(questions, title, onEmpty) %}
+	<div class="col-lg-{{ rowSize }}">
 		<div class="panel panel-default question-list">
 			<div class="panel-heading">
-				<h3 class="panel-title">Unanswered Questions</h3>
+				<h3 class="panel-title">{{ title }} Questions</h3>
 			</div>
-
-			{% if unanswered.length %}
+			
+			{% if questions.length %}
 			<div class="list-group">
-				{% for question in unanswered %}
+				{% for question in questions %}
 				<a href="/question/{{ question.shortid }}/{{ question.handle }}" class="list-group-item">
 					<span class="question">{{ question.question }}</span>
-					<span class="details">Asked {{ question.created.relative() }}</span>
+					<span class="details">{% if question.answered_on %}Answered {{ question.answered_on.relative() }}{% else %}Asked {{ question.created.relative() }}{% endif %}</span>
 				</a>
 				{% endfor %}
 			</div>
 			{% else %}
-			<div class="no-items">You have no unanswered questions.</div>
+			<div class="no-items">{{ onEmpty }}</div>
 			{% endif %}
 		</div>
 	</div>
-	<div class="col-lg-6">
-		<div class="panel panel-default question-list">
-			<div class="panel-heading">
-				<h3 class="panel-title">Answered Questions</h3>
-			</div>
+{% endmacro %}
 
-			{% if answered.length %}
-			<div class="list-group">
-				{% for question in answered %}
-				<a href="#" class="list-group-item">
-					<span class="question">{{ question.question }}</span>
-					<span class="details">Asked {{ question.created.relative() }}</span>
-				</a>
-				{% endfor %}
-			</div>
-			{% else %}
-			<div class="no-items">You have no answered questions.</div>
-			{% endif %}
-		</div>
-	</div>
+<div class="row">
+	{% if $util.permission("admin", user) %}
+	{{ quest(all, "All Unanswered", "There are no unanswered questions.") }}
+	{% endif %}
+	{{ quest(unanswered, "Unanswered", "You have no unanswered questions.") }}
+	{{ quest(answered, "Answered", "You have no answered questions.") }}
 </div>
 
 {% endblock %}

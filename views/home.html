@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block bodyclass %}home{% endblock %}
+
+{% block body %}
+
+<h1>
+	<small>Beneath the Ink's</small>
+	Knowledge Base
+</h1>
+
+{% macro quest(questions, title, onEmpty) %}
+<div class="col-lg-6">
+	<div class="panel panel-default question-list">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{ title }} Questions</h3>
+		</div>
+		
+		{% if questions.length %}
+		<div class="list-group">
+			{% for question in questions %}
+			<a href="/question/{{ question.shortid }}/{{ question.handle }}" class="list-group-item">
+				<span class="question">{{ question.question }}</span>
+				<span class="details">{% if question.answered_on %}Answered {{ question.answered_on.relative() }}{% else %}Asked {{ question.created.relative() }}{% endif %}</span>
+			</a>
+			{% endfor %}
+		</div>
+		{% else %}
+		<div class="no-items">{{ onEmpty }}</div>
+		{% endif %}
+	</div>
+</div>
+{% endmacro %}
+
+<div class="row">
+	{{ quest(recent, "Recently Answered", "There are no recently answered questions.") }}
+	{{ quest(most_viewed, "Most Viewed", "There are no most viewed questions.") }}
+</div>
+
+{% endblock %}

@@ -7,6 +7,7 @@ lessm = require 'less-middleware'
 auth = require "./auth"
 fs = require "fs"
 path = require "path"
+util = require "./util"
 
 # initiate express
 router =
@@ -60,10 +61,18 @@ marked.setOptions
 	sanitize: true
 tplenv.addFilter "markdown", marked
 
+# set up async username helper
+tplenv.addFilter "username", (id, cb) ->
+	app.users.findOne _id: id, (err, user) ->
+		if err? then cb err
+		else unless user? then cb null, "Unknown"
+		else cb null, user.username
+, true
+
 # custom res.render
 router.use (req, res, next) ->
 	# allows any middleware to attach data to template
-	locals = $req: req
+	locals = $req: req, $util: util, Date: Date, $app: app
 	res.local = (key, val) ->
 		if _.isObject(key) then _.each key, (k, v) -> res.local k, v
 		return unless _.isString(key) and key isnt ""
