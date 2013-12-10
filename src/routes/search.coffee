@@ -1,6 +1,6 @@
 async = require "async"
 
-app.express.get "/search", (req, res) ->
+app.express.get "/search", (req, res, next) ->
 	search = req.query.s ? ""
 	
 	app.search.query(search).end (err, results) ->

@@ -1,5 +1,5 @@
 
-app.express.get "/tag/:tag", (req, res) ->
+app.express.get "/tag/:tag", (req, res, next) ->
 	tag = req.param("tag").toLowerCase()
 
 	Questions.find { tags: $in: [ tag ] }, (err, results) ->

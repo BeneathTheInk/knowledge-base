@@ -2,10 +2,10 @@ _ = require "underscore"
 
 pagetitle = "Sign In"
 
-app.express.get "/signin", (req, res) ->
+app.express.get "/signin", (req, res, next) ->
 	res.render "signin", title: pagetitle
 
-app.express.post "/signin", (req, res) ->
+app.express.post "/signin", (req, res, next) ->
 	doerror = (err) ->
 		err = err.message if err instanceof Error
 		res.render "signin", error: err, title: pagetitle
@@ -17,7 +17,7 @@ app.express.post "/signin", (req, res) ->
 		if err? then doerror err
 		else res.redirect redirect
 
-app.express.get "/signout", (req, res) ->
+app.express.get "/signout", (req, res, next) ->
 	req.signout()
 	unless _.isEmpty(req.query.u) then res.redirect req.query.u
 	else res.redirect "/signin"

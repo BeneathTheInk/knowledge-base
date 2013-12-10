@@ -1,7 +1,7 @@
 _ = require "underscore"
 util = require "../util"
 
-app.express.get "/inbox", (req, res) ->
+app.express.get "/inbox", (req, res, next) ->
 	return res.redirect "/signin" unless req.user?
 	user = req.user
 

@@ -1,7 +1,7 @@
 _ = require "underscore"
 util = require "../util"
 
-app.express.get "/question/:shortid/:handle?", (req, res) ->
+app.express.get "/question/:shortid/:handle?", (req, res, next) ->
 
 	Questions.findOne shortid: req.param("shortid"), (err, question) ->
 		if err? then return next err
@@ -23,7 +23,7 @@ app.express.get "/question/:shortid/:handle?", (req, res) ->
 			if question.answered_by? then app.users.findOne _id: question.answered_by, done
 			else done()
 
-app.express.get "/question/:shortid/:handle/delete", (req, res) ->
+app.express.get "/question/:shortid/:handle/delete", (req, res, next) ->
 
 	Questions.findOne shortid: req.param("shortid"), (err, question) ->
 		if err? then return next err
@@ -40,7 +40,7 @@ app.express.get "/question/:shortid/:handle/delete", (req, res) ->
 		# delete!
 		question.remove (err) -> res.redirect url
 
-app.express.post "/question/:shortid/:handle?", (req, res) ->
+app.express.post "/question/:shortid/:handle?", (req, res, next) ->
 	# redirect back to question if not signed in
 	unless req.user? then return res.redirect req.url
 	user = req.user

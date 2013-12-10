@@ -4,10 +4,10 @@ async = require "async"
 
 pagetitle = "Ask a Question"
 
-app.express.get "/ask", (req, res) ->
+app.express.get "/ask", (req, res, next) ->
 	res.render "ask", title: pagetitle
 
-app.express.post "/ask", (req, res) ->
+app.express.post "/ask", (req, res, next) ->
 	doerror = (err) ->
 		err = err.message if err instanceof Error
 		res.render "ask", error: err, data: req.body, title: pagetitle
