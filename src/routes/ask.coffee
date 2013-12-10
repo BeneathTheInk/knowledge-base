@@ -23,6 +23,12 @@ app.express.post "/ask", (req, res, next) ->
 	data = _.pick req.body, "question", "details"
 	data.owner = req.user._id
 
-	Questions.create data, (err, docs) ->
-		if err? then doerror err
-		else res.redirect "/inbox?success=1"
+	Questions.create data, (err, doc) ->
+		if err? then return doerror err
+		
+		to = "info@beneaththeink.com"
+		if app.env is "development" then to = req.user.email
+
+		app.mail to, doc.question, """#{doc.details}\n\n---\nvia #{req.user.username}\nhttp://#{app.host}/question/#{doc.shortid}/#{doc.handle}"""
+		
+		res.redirect "/inbox?success=1"

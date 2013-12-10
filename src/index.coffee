@@ -87,3 +87,4 @@ module.exports = new Application
 # LOAD PARTS #
 require "./setup"	# MongoDB + Redis
 require "./router"	# Express + Nunjucks
+require "./email"	# Mailgun
